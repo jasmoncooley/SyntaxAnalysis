@@ -51,3 +51,16 @@ int main() {
  }
 }
 
+/*****************************************************/
+/* lookup - a function to lookup operators and parentheses
+ and return the token */
+int lookup(char ch) {
+ switch (ch) {
+ case '(':
+ addChar();
+ nextToken = LEFT_PAREN;
+ break;
+ case ')':
+ addChar();
+ nextToken = RIGHT_PAREN;
+ break;
