@@ -89,3 +89,12 @@ void addChar() {
  input and determine its character class */
 void getChar() {
  if ((nextChar = getc(in_fp)) != EOF) {
+ if (isalpha(nextChar))
+ charClass = LETTER;
+ else if (isdigit(nextChar))
+ charClass = DIGIT;
+ else charClass = UNKNOWN;
+ }
+ else
+ charClass = EOF;
+}
