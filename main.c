@@ -136,3 +136,9 @@ int lex() {
  }
  nextToken = INT_LIT;
  break;
+
+/* Parentheses and operators */
+ case UNKNOWN:
+ lookup(nextChar);
+ getChar();
+ break;
