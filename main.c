@@ -64,3 +64,11 @@ int lookup(char ch) {
  addChar();
  nextToken = RIGHT_PAREN;
  break;
+
+ default:
+ addChar();
+ nextToken = EOF;
+ break;
+ }
+ return nextToken;
+}
