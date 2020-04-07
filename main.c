@@ -125,3 +125,14 @@ int lex() {
  }
  nextToken = IDENT;
  break;
+
+/* Parse integer literals */
+ case DIGIT:
+ addChar();
+ getChar();
+ while (charClass == DIGIT) {
+ addChar();
+ getChar();
+ }
+ nextToken = INT_LIT;
+ break;
