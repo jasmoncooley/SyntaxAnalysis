@@ -12,6 +12,8 @@ char nextChar;
 int lexLen;
 int token;
 int nextToken;
+char * line = NULL;
+int i = 0;
 FILE *in_fp, *fopen();
 
 /* Function declarations */
@@ -42,20 +44,34 @@ int lex();
 #define LEFT_PAREN 25
 #define RIGHT_PAREN 26
 #define EQUAL 27
+#define NEWLINE 28
 
 /******************************************************/
 /* main driver */
 int main(int argc, const char * argv[]) {
+  
+    size_t len = 0;
+    ssize_t read;
 /* Open the input data file and process its contents */
- if ((in_fp = fopen(argv[1], "r")) == NULL){
+ if ((in_fp = fopen([argv[1], "r")) == NULL){
  printf("ERROR - cannot open front.in \n");
  }
  else {
- getChar();
- do {
- lex();
- stmt();
- } while (nextToken != EOF);
+
+  while ((read = getline(&line, &len, in_fp)) != -1) {
+        // printf("Retrieved line of length %zu:\n", read);
+        printf("%s", line);
+        getChar();
+        lex();
+        stmt();
+        printf("\n");
+        i=0;
+        // do {
+        
+        // } 
+        // while (nextToken != EOF);
+    }
+
  }
 }
 
@@ -97,6 +113,10 @@ int lookup(char ch) {
  nextToken = MULT_OP;
  //printf("Multi sign");
  break;
+ case '\n':
+  addChar();
+  nextToken = NEWLINE;
+  break;
 
  default:
  addChar();
@@ -111,6 +131,7 @@ int lookup(char ch) {
 void addChar() {
  if (lexLen <= 98) {
  lexeme[lexLen++] = nextChar;
+//  printf("%s",lexeme);
  lexeme[lexLen] = 0;
  }
  else
@@ -121,15 +142,21 @@ void addChar() {
 /* getChar - a function to get the next character of
  input and determine its character class */
 void getChar() {
- if ((nextChar = getc(in_fp)) != EOF) {
+
+ if ((nextChar = line[i]) != '\n') {
+  // printf("%c", nextChar);
+  //  printf("  \n");
  if (isalpha(nextChar))
  charClass = LETTER;
+ 
  else if (isdigit(nextChar))
  charClass = DIGIT;
  else charClass = UNKNOWN;
  }
  else
  charClass = EOF;
+
+ i++;
 }
 
 /*****************************************************/
@@ -138,6 +165,7 @@ void getChar() {
 void getNonBlank() {
  while (isspace(nextChar))
  getChar();
+//  printf("Current lexeme: %d",nextChar);
 }
 void error(const char * msg){
   printf("ERROR: %s, but got %s \n", msg, lexeme);
@@ -154,6 +182,7 @@ int lex() {
 
 /* Parse identifiers */
  case LETTER:
+//  printf("%d",charClass);
  addChar();
  getChar();
  while (charClass == LETTER || charClass == DIGIT) {
@@ -203,7 +232,7 @@ void stmt() {
 //<stmt> needs to start with an identifier then it should immediately meet an ASSIGN_OP (=)
   if (nextToken == IDENT){
     lex(); // gets the next token
-    printf("%d", nextToken);
+    // printf("%d", nextToken);
        if (nextToken == ASSIGN_OP){
          lex();
           expr();
@@ -244,8 +273,11 @@ void term() {
 factor();
 /* As long as the next token is * or /, get the
  next token and parse the next factor */
- while (nextToken == MULT_OP || nextToken == DIV_OP) {
+ while (nextToken == MULT_OP || nextToken == DIV_OP ) {
  lex();
+ if (nextToken == NEWLINE){
+   break;
+ }
  factor();
  }
  printf("Exit <term>\n");
