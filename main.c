@@ -71,6 +71,16 @@ int lookup(char ch) {
  addChar();
  nextToken = RIGHT_PAREN;
  break;
+   case '=':
+ addChar();
+ nextToken = ASSIGN_OP;
+ //printf("Equal sign");
+ break;
+  case '-':
+ addChar();
+ nextToken = SUB_OP;
+ //printf("Subtraction sign");
+ break;
 
  default:
  addChar();
