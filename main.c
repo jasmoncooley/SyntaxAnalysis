@@ -22,6 +22,7 @@ void stmt();
 void term();
 void factor();
 void expr();
+void error();
 int lex();
 
 /* Character classes */
@@ -112,7 +113,11 @@ void getNonBlank() {
  while (isspace(nextChar))
  getChar();
 }
+void error(const char * msg){
+  printf("ERROR: %s, but got %s \n", msg, lexeme);
+  exit(0);
 
+}
 /*****************************************************/
 /* lex - a simple lexical analyzer for arithmetic
  expressions */
@@ -220,13 +225,13 @@ void factor() {
  if (nextToken == RIGHT_PAREN)
  lex();
  else
-  expect_error(RIGHT_PAREN);
+  error("Expected )");
  }
    /* End of if (nextToken == ... */
 /* It was not an id, an integer literal, or a left
  parenthesis */
  else
-expect_error(LEFT_PAREN);
+error("Expected (");
  } /* End of else */
  printf("Exit <factor>\n");;
 } /* End of function factor */
