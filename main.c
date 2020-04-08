@@ -45,9 +45,9 @@ int lex();
 
 /******************************************************/
 /* main driver */
-int main() {
+int main(int argc, const char * argv[]) {
 /* Open the input data file and process its contents */
- if ((in_fp = fopen("front.in", "r")) == NULL){
+ if ((in_fp = fopen(argv[1], "r")) == NULL){
  printf("ERROR - cannot open front.in \n");
  }
  else {
