@@ -213,4 +213,12 @@ void factor() {
 /* If the RHS is ( <expr>), call lex to pass over the
  left parenthesis, call expr, and check for the right
  parenthesis */
-
+ else {
+ if (nextToken == LEFT_PAREN) {
+ lex();
+ expr();
+ if (nextToken == RIGHT_PAREN)
+ lex();
+ else
+  expect_error(RIGHT_PAREN);
+ }
