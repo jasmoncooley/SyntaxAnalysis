@@ -200,11 +200,14 @@ int lex() {
 // the stmt function
 void stmt() {
   printf("Enter <stmt>\n");
-
+//<stmt> needs to start with an identifier then it should immediately meet an ASSIGN_OP (=)
   if (nextToken == IDENT){
     lex(); // gets the next token
     printf("%d", nextToken);
-
+       if (nextToken == ASSIGN_OP){
+         lex();
+          expr();
+       }
 
 
 /* expr
