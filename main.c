@@ -60,7 +60,7 @@ int main(int argc, const char * argv[]) {
     size_t len = 0;
     ssize_t read;
 /* Open the input data file and process its contents */
- if ((in_fp = fopen("front.in", "r")) == NULL){
+ if ((in_fp = fopen(argv[1], "r")) == NULL){
  printf("ERROR - cannot open front.in \n");
  }
  else {
