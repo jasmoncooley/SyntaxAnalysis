@@ -81,6 +81,21 @@ int lookup(char ch) {
  nextToken = SUB_OP;
  //printf("Subtraction sign");
  break;
+   case '+':
+ addChar();
+ nextToken = ADD_OP;
+ //printf("Addition sign");
+ break; 
+ case '/':
+ addChar();
+ nextToken = DIV_OP;
+ //printf("Division sign");
+ break;
+ case '*':
+ addChar();
+ nextToken = MULT_OP;
+ //printf("Multi sign");
+ break;
 
  default:
  addChar();
