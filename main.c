@@ -222,3 +222,11 @@ void factor() {
  else
   expect_error(RIGHT_PAREN);
  }
+   /* End of if (nextToken == ... */
+/* It was not an id, an integer literal, or a left
+ parenthesis */
+ else
+expect_error(LEFT_PAREN);
+ } /* End of else */
+ printf("Exit <factor>\n");;
+} /* End of function factor */
