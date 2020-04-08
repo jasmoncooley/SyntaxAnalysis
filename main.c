@@ -54,7 +54,7 @@ int main() {
  getChar();
  do {
  lex();
-stmt();
+ stmt();
  } while (nextToken != EOF);
  }
 }
@@ -207,7 +207,14 @@ void stmt() {
        if (nextToken == ASSIGN_OP){
          lex();
           expr();
-       }
+       } else {
+      // throw an expect error
+      error("Expected Equal Sign");
+    }
+  } 
+
+  printf("Exit <stmt>\n");
+}
 
 
 /* expr
